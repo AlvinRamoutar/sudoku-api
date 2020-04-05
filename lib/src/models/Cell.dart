@@ -31,33 +31,27 @@ class Cell extends ICell {
     onChange.add(value);
   }
 
-  int getValue() {
-    return this._value;
-  }
+  int getValue() => this._value;
 
-  bool prefill() {
-    return this._isPrefill;
-  }
+  bool prefill() => this._isPrefill;
 
-  void setValidity(bool isValid) {
-    this._isValid = isValid;
-  }
+  void setValidity(bool isValid) => this._isValid = isValid;
+  bool valid() => this._isValid;
 
-  bool valid() {
-    return this._isValid;
-  }
+  void setMarkup(bool markup) => this._isMarkup = markup;
+  bool markup() => this._isMarkup;
 
-  void setMarkup(bool markup) {
-    this._isMarkup = markup;
-  }
+  Position getPosition() => position;
 
-  bool markup() {
-    return this._isMarkup;
-  }
-
+  ///
+  ///
   @override
-  Position getPosition() {
-    return position;
+  bool operator ==(dynamic obj) {
+
+    if(obj is Cell && obj.getPosition() == getPosition()) {
+      return true;
+    }
+    return false;
   }
 
 }

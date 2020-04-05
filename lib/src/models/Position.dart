@@ -1,6 +1,10 @@
 
 import 'dart:math';
 
+import '../logic/GridUtils.dart';
+
+///
+///
 class Position {
 
   Point grid;
@@ -8,9 +12,11 @@ class Position {
 
   Position(this.grid, this.segment);
 
-  Position.fromRaw(int gridX, int gridY, int segmentX, int segmentY) {
+  ///
+  ///
+  Position.fromRaw(int gridX, int gridY) {
     grid = new Point(gridX, gridY);
-    segment = new Point(segmentX, segmentY);
+    segment = segmentFromGridPos(gridX, gridY);
   }
   
 }

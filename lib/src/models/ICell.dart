@@ -1,6 +1,8 @@
 
 import 'Position.dart';
 
+///
+///
 abstract class ICell {
 
   final Position position;
@@ -10,8 +12,7 @@ abstract class ICell {
 
   Position getPosition();
 
-  bool pristine() {
-    return this.isPristine;
-  }
+  bool pristine() => this.isPristine;
+  void setPristine(bool pristine) => this.isPristine = pristine;
 
 }
