@@ -14,11 +14,12 @@ class Grid {
   ///
   Grid() {
     _matrix = List.generate(9, (_) => new List(9), growable: false);
+    _buildEmpty();
   }
 
   ///
   ///
-  void buildEmpty() {
+  void _buildEmpty() {
 
     for(int r = 0; r < 9; r++) {
       for(int c = 0; c < 9; c++) {
@@ -36,7 +37,11 @@ class Grid {
     List<int> vals = new List<int>();
     for(int i = 1; i < 10; vals.add(i), i++);
     vals.shuffle();
-    for(int c = 0; c < 9; _matrix[0][c].setValue(vals[c]), c++);
+    for(int c = 0; c < 9; c++) {
+      _matrix[0][c].setValue(vals[c]);
+      _matrix[0][c].setPrefill(true);
+      _matrix[0][c].setValidity(true);
+    }
   }
 
 

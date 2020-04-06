@@ -1,7 +1,7 @@
 import 'package:sudokuapi/src/models/Position.dart';
 
-import '../models/Grid.dart';
-import '../models/Cell.dart';
+import 'models/Grid.dart';
+import 'models/Cell.dart';
 
 /// Puzzle Solver class which implements solving and validation functionality
 /// Implementation based on my previous project; Java Sudoku
@@ -13,8 +13,17 @@ class Solver {
 
   ///
   ///
-  Future<Grid> solve(Grid grid) async {
+  Future<Grid> solveFromGrid(Grid grid) async {
+    _solvedBoard = new Grid();
     _solve(grid, 0);
+    return _solvedBoard;
+  }
+
+  Future<Grid> solve() async {
+    _solvedBoard = new Grid();
+    Grid _tmpGrid = new Grid();
+    _tmpGrid.pregenFirstRow();
+    _solve(_tmpGrid, 0);
     return _solvedBoard;
   }
 
@@ -30,6 +39,7 @@ class Solver {
         for (int i = 0; i < 9; i++) {
           _solvedBoard.matrix()[o][i].setValue(board.matrix()[o][i].getValue());
           _solvedBoard.matrix()[o][i].setValidity(true);
+          _solvedBoard.matrix()[o][i].setPrefill(true);
         }
       }
       _solutionAttained = true;
@@ -113,4 +123,6 @@ class Solver {
 
     return true;
   }
+
+  Grid solvedBoard() => _solvedBoard;
 }

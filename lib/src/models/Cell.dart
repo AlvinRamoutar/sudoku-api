@@ -33,6 +33,7 @@ class Cell extends ICell {
 
   int getValue() => this._value;
 
+  void setPrefill(bool isPrefilled) => this._isPrefill = isPrefilled;
   bool prefill() => this._isPrefill;
 
   void setValidity(bool isValid) => this._isValid = isValid;

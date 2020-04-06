@@ -7,11 +7,14 @@ import 'SudokuException.dart';
 
 ///
 ///
-Point segmentFromGridPos(int row, int col) {
-  int _x = (row / 3).floor();
-  int _y = (col / 3).floor();
-  return new Point(_x,  _y);
-}
+Point segmentFromGridPos(int row, int col) =>
+    new Point((row / 3).floor(),  (col / 3).floor());
+
+///
+///
+Position positionFromIndice(int indice) =>
+    new Position.fromRaw((indice / 9).floor(), indice % 9);
+
 
 ///
 ///
@@ -36,7 +39,7 @@ void printGrid(Grid grid) {
   for (int r = 0; r < 9; r++) {
     String row = "";
     for (Cell c in grid.getRow(r)) {
-      row += c.getValue().toString() + " ";
+      row += ((c.getValue() == 0) ? " " : c.getValue()).toString() + " ";
     }
     print(row);
   }
