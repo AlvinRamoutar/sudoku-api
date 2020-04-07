@@ -12,23 +12,23 @@ class Cell extends ICell {
   bool _isValid;
   bool _isMarkup = false;
 
-  StreamController onChange;
+  StreamController _onChange;
 
   Cell(position, [this._value = 0]) : super(position) {
     _isPrefill = (_value != 0);
     _isValid = _isPrefill;
 
-    onChange = new StreamController.broadcast();
+    _onChange = new StreamController.broadcast();
   }
 
-  Stream get change => onChange.stream;
+  Stream get change => _onChange.stream.asBroadcastStream();
 
 
   void setValue(int value) {
     this._value = value;
     this.isPristine = false;
 
-    onChange.add(value);
+    _onChange.add(this);
   }
 
   int getValue() => this._value;

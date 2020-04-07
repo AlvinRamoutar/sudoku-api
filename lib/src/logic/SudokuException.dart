@@ -1,17 +1,13 @@
 
-///
-///
-class InvalidRowOrColumnException implements Exception {
-  String cause;
-  InvalidRowOrColumnException(this.cause);
-}
 
 ///
 ///
-class InvalidSegmentException implements Exception {
+class InvalidPositionException implements Exception {
   String cause;
-  InvalidSegmentException(this.cause);
+
+  InvalidPositionException(this.cause);
 }
+
 
 ///
 ///

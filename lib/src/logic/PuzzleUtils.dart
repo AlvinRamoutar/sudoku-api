@@ -14,3 +14,10 @@ Map<int, int> difficultyMap = {
   2: 26,
   3: 20,
 };
+
+enum CellViolation {
+  Row,
+  Column,
+  Segment,
+  Solution
+}

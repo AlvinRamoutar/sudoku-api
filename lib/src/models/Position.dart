@@ -1,22 +1,68 @@
 
 import 'dart:math';
 
-import '../logic/GridUtils.dart';
+import '../logic/SudokuException.dart';
 
+
+/// Represents the cartesian position of a cell on a typical Sudoku 9x9 grid
+/// X and Y are row and column respectfully.
 ///
-///
+///           SEG0    SEG1    SEG2
+///          0 1 2   3 4 5   6 7 8
+///        -------------------------
+///      0 | 0 0 0 | 0 0 0 | 0 0 0 |
+/// SEG0 1 | 0 0 0 | 0 0 0 | 0 0 0 |
+///      2 | 0 0 0 | 0 0 0 | 0 0 0 |
+///        -------------------------
+///      3 | 0 0 0 | 0 0 0 | 0 0 0 |
+/// SEG1 4 | 0 0 0 | 0 0 0 | 0 0 0 |
+///      5 | 0 0 0 | 0 0 0 | 0 0 0 |
+///        -------------------------
+///      6 | 0 0 0 | 0 0 0 | 0 0 0 |
+/// SEG2 7 | 0 0 0 | 0 0 0 | 0 0 0 |
+///      8 | 0 0 0 | 0 0 0 | 0 0 0 |
+///        -------------------------
 class Position {
 
   Point grid;
   Point segment;
+  int index;
 
-  Position(this.grid, this.segment);
+  /// Construct a cell position, using either a [row]/[column] pair, or [index]
+  Position({int row = -1, int column = -1, int index = -1}) {
 
-  ///
-  ///
-  Position.fromRaw(int gridX, int gridY) {
-    grid = new Point(gridX, gridY);
-    segment = segmentFromGridPos(gridX, gridY);
+    /// If index is supplied
+    if(index != -1) {
+      grid = new Point((index / 9).floor(), index % 9);
+      segment = _segmentFromGridPos(grid.x, grid.y);
+      this.index = index;
+
+    /// If row/column is supplied
+    } else if (row != -1 && column != -1) {
+      grid = new Point(row, column);
+      segment = _segmentFromGridPos(row, column);
+      index = (row * 9) + column;
+
+    /// If nothing is supplied (hey, that's illegal)
+    } else {
+      throw new InvalidPositionException("Cannot generate Position without "
+          "row/column, or cell index");
+    }
   }
-  
+
+
+  /// Determine segment of the grid a cell is at using [row] and [col]
+  /// Returned as a point, where X and Y are row and column respectfully.
+  Point _segmentFromGridPos(int row, int col) =>
+      new Point((row / 3).floor(),  (col / 3).floor());
+
+
+  /// Determine if position is valid via simple range check of [index]
+  bool isValid() {
+    if(index < 0 || index > 80) {
+      return false;
+    }
+    return true;
+  }
+
 }

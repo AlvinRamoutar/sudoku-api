@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudokuapi/src/Puzzle.dart';
 import 'package:sudokuapi/src/logic/GridUtils.dart';
+import 'package:sudokuapi/src/models/Position.dart';
 import 'package:sudokuapi/src/models/PuzzleOptions.dart';
 
 import 'package:sudokuapi/sudokuapi.dart';
@@ -11,7 +12,7 @@ void main() {
   test(testTitle01, () {
     final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
     final Puzzle puzzle = new Puzzle(puzzleOptions);
-    puzzle.generateRandom().then((_) {
+    puzzle.generate().then((_) {
       print("=================");
       print(testTitle01);
       print("-----------------");
@@ -26,7 +27,7 @@ void main() {
     final PuzzleOptions puzzleOptions =
       new PuzzleOptions(patternName: patternName);
     final Puzzle puzzle = new Puzzle(puzzleOptions);
-    puzzle.generatefromPattern().then((_) {
+    puzzle.generate().then((_) {
       print("=================");
       print(testTitle);
       print("-----------------");
@@ -56,5 +57,32 @@ void main() {
   String testTitle05 = 'Test Puzzle Generation. Pattern: Winter.';
   test(testTitle05, () {
     testPatternPuzzle(testTitle05, "Winter");
+  });
+
+  String testTitle06 = 'Test Grid-level listener for cell change';
+  test(testTitle06, () {
+
+    final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
+    final Puzzle puzzle = new Puzzle(puzzleOptions);
+    Position randPos;
+
+    puzzle.generate().then((_) {
+      print("=================");
+      print(testTitle01);
+      print("-----------------");
+      printGrid(puzzle.solvedBoard());
+      print("-----------------");
+      printGrid(puzzle.board());
+      print("-----------------");
+
+      while(true) {
+        randPos = getRandomPosition();
+        if(!puzzle.board().matrix()[randPos.grid.x][randPos.grid.y].prefill()) {
+          puzzle.board().matrix()[randPos.grid.x][randPos.grid.y].setValue(1);
+          break;
+        }
+      }
+      print("=================");
+    });
   });
 }

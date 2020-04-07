@@ -57,7 +57,7 @@ class Patterner {
     cellIndices.shuffle();
 
     while(cellIndices.length != cellsRemaining) {
-      pos = positionFromIndice(cellIndices.removeLast());
+      pos = new Position(index: cellIndices.removeLast());
       grid.matrix()[pos.grid.x][pos.grid.y].setValidity(false);
       grid.matrix()[pos.grid.x][pos.grid.y].setValue(0);
       grid.matrix()[pos.grid.x][pos.grid.y].setPrefill(false);

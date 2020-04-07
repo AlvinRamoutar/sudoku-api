@@ -55,7 +55,7 @@ class Solver {
       } else {
         //Currently at a location that requires a value, try all possibilities
         for (int i = 1; i <= 9; i++) {
-          if (consistent(board, new Position.fromRaw(row, col), i)) {
+          if (consistent(board, new Position(row: row, column: col), i)) {
             board.matrix()[row][col].setValue(i);
             _solve(board, indice + 1);
             board.matrix()[row][col].setValue(0);
@@ -94,7 +94,7 @@ class Solver {
         _checkAmbiguity(board, indice + 1);
       } else {
         for (int i = 1; i <= 9; i++) {
-          if (consistent(board, new Position.fromRaw(row, col), i)) {
+          if (consistent(board, new Position(row: row, column: col), i)) {
             board.matrix()[row][col].setValue(i);
             _checkAmbiguity(board, indice + 1);
             board.matrix()[row][col].setValue(0);

@@ -5,33 +5,24 @@ import '../models/Grid.dart';
 import '../models/Position.dart';
 import 'SudokuException.dart';
 
-///
-///
-Point segmentFromGridPos(int row, int col) =>
-    new Point((row / 3).floor(),  (col / 3).floor());
+/*
+ Collection of Utility functions used for stuff grid-related
+ */
 
-///
-///
-Position positionFromIndice(int indice) =>
-    new Position.fromRaw((indice / 9).floor(), indice % 9);
-
-
-///
-///
-void throwIfInvalidRowColQueried(int rowOrCol) {
-  if(rowOrCol > 8 || rowOrCol < 0) {
-    throw new InvalidSegmentException("Invalid row or column requested");
+/// Throw an [InvalidPositionException] exception if [position] is not valid
+void throwIfInvalid(Position position) {
+  if(position.isValid()) {
+    throw new InvalidPositionException("Position is invalid for a cell at row"
+        " ${position.grid.x} and column ${position.grid.y}");
   }
 }
 
-///
-///
-void throwIfInvalidSegmentQueried(Position position) {
-  if(position.segment.x > 2 || position.segment.x < 0 ||
-     position.segment.y > 2 || position.segment.y < 0) {
-    throw new InvalidSegmentException("Invalid grid segment queried");
-  }
+/// Gets a random, valid [position]
+Position getRandomPosition() {
+  Random rand = new Random();
+  return new Position(index: rand.nextInt(81));
 }
+
 
 /// Used for debugging [grid], prints to console a somewhat-grid-shaped
 /// matrix of cell value
