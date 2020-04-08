@@ -1,6 +1,5 @@
 
-///
-///
+/// Pattern itself [Map] and metadata describing it
 class Pattern {
 
   String _name;
@@ -8,16 +7,17 @@ class Pattern {
   int _difficulty;
   String _author;
 
-  Pattern(String name, Map<int, String> map,
-      {int difficulty = 0, String author}) {
-    _name = name;
-    _map = map;
-    _difficulty = difficulty;
-    _author = (author == null || author.isEmpty) ? "Anonymous" : author;
+  /// Constructs a new Pattern object
+  /// [difficulty] is arbitrary, and 'can' defined by # of clues given
+  Pattern(this._name, this._map,
+      {int difficulty = 0, String author = "Anonymous"}) {
+    this._difficulty = difficulty;
+    this._author = author;
   }
 
+  /// Getters and setters
+  /// I can only make these comments so interesting and no more :l
   String getName() => _name;
   Map<int, String> getMap() => _map;
-
 
 }

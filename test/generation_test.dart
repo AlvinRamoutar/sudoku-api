@@ -1,10 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudokuapi/src/Puzzle.dart';
-import 'package:sudokuapi/src/logic/GridUtils.dart';
-import 'package:sudokuapi/src/models/Position.dart';
-import 'package:sudokuapi/src/models/PuzzleOptions.dart';
-
-import 'package:sudokuapi/sudokuapi.dart';
+import 'package:sudoku_api/sudoku_api.dart';
 
 void main() {
 
@@ -40,23 +35,23 @@ void main() {
 
   String testTitle02 = 'Test Puzzle Generation. Pattern: Spring.';
   test(testTitle02, () {
-    testPatternPuzzle(testTitle02, "Spring");
+    testPatternPuzzle(testTitle02, "spring");
   });
 
 
   String testTitle03 = 'Test Puzzle Generation. Pattern: Summer.';
   test(testTitle03, () {
-    testPatternPuzzle(testTitle03, "Summer");
+    testPatternPuzzle(testTitle03, "summer");
   });
 
   String testTitle04 = 'Test Puzzle Generation. Pattern: Fall.';
   test(testTitle04, () {
-    testPatternPuzzle(testTitle04, "Fall");
+    testPatternPuzzle(testTitle04, "fall");
   });
 
   String testTitle05 = 'Test Puzzle Generation. Pattern: Winter.';
   test(testTitle05, () {
-    testPatternPuzzle(testTitle05, "Winter");
+    testPatternPuzzle(testTitle05, "winter");
   });
 
   String testTitle06 = 'Test Grid-level listener for cell change';

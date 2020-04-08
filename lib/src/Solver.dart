@@ -1,5 +1,4 @@
-import 'package:sudokuapi/src/models/Position.dart';
-
+import 'models/Position.dart';
 import 'models/Grid.dart';
 import 'models/Cell.dart';
 

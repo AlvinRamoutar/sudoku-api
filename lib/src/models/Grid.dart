@@ -109,6 +109,8 @@ class Grid {
       }
       _seenValues.add(cell.getValue());
     }
+
+    return false;
   }
 
   /// Determines if a row is violated by using a [Set] of [Cell] values
@@ -137,6 +139,7 @@ class Grid {
 
 
   /// Getters and setters
+  /// I can only make these comments so interesting and no more :l
   Cell cellAt(Position pos) => _matrix[pos.grid.x][pos.grid.y];
   Stream get change => _onChange.stream.asBroadcastStream();
   List<List<Cell>> matrix() => _matrix;

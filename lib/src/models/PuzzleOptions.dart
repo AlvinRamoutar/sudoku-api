@@ -1,6 +1,9 @@
 
 import 'package:uuid/uuid.dart';
 
+import '../Puzzle.dart';
+
+/// Encapsulates serializable properties required for setting up a [Puzzle]
 class PuzzleOptions {
 
   final String _id = new Uuid().v1();
@@ -8,13 +11,13 @@ class PuzzleOptions {
   int difficulty;
   String patternName;
 
+  /// Constructs new PuzzleOptions - use me when constructing a new [Puzzle]
   PuzzleOptions({String name,
-                 int difficulty,
-                 String patternName}) {
+                 int difficulty = 0,
+                 String patternName = "Random"}) {
     this.name = name;
-    this.difficulty = (difficulty == null) ? 0 : difficulty;
-    this.patternName = (patternName == null || patternName.isEmpty) ?
-      "Random" : patternName;
+    this.difficulty = difficulty;
+    this.patternName = patternName;
   }
 
 }

@@ -41,7 +41,7 @@ class Position {
     } else if (row != -1 && column != -1) {
       grid = new Point(row, column);
       segment = _segmentFromGridPos(row, column);
-      index = (row * 9) + column;
+      this.index = (row * 9) + column;
 
     /// If nothing is supplied (hey, that's illegal)
     } else {
@@ -60,9 +60,9 @@ class Position {
   /// Determine if position is valid via simple range check of [index]
   bool isValid() {
     if(index < 0 || index > 80) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
 }

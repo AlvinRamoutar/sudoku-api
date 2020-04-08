@@ -1,7 +1,9 @@
 
+/*
+  Collection of Sudoku-specific exceptions
+ */
 
-///
-///
+/// Throw whenever a [Position] is valid (it does not confirm to 9x9 grid)
 class InvalidPositionException implements Exception {
   String cause;
 
@@ -9,8 +11,7 @@ class InvalidPositionException implements Exception {
 }
 
 
-///
-///
+/// Throw whenever there's a [Pattern] related issue
 class InvalidPatternException implements Exception {
   String cause;
   InvalidPatternException(this.cause);
