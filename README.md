@@ -81,3 +81,4 @@ One of my college projects; [Java Sudoku](https://github.com/AlvinRamoutar/Sudok
 #### Libraries
 * [uuid](https://pub.dev/packages/uuid)
 * [tuple](https://pub.dev/packages/tuple)
+* [collection](https://pub.dev/packages/collection)
