@@ -1,5 +1,4 @@
 
-import 'logic/GridUtils.dart';
 import 'logic/SudokuException.dart';
 import 'models/PatternSet.dart';
 import 'models/Pattern.dart';
@@ -12,13 +11,14 @@ class Patterner {
 
   Patterner() {
     patternSet = new PatternSet();
+    patternSet.loadDefaults();
   }
 
   ///
   ///
   Grid buildGridFromPattern(Grid grid, String patternName) {
 
-    Pattern pattern = patternSet.collection().firstWhere(
+    Pattern pattern = patternSet.firstWhere(
       (p) => p.getName() == patternName,
       orElse: () => null);
 
