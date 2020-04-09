@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import '../logic/GridUtils.dart';
 import 'Position.dart';
@@ -7,7 +6,6 @@ import 'Cell.dart';
 /// Container for holding 9x9 cell matrix
 /// For an example of what a 9x9 grid looks like, see [Position]
 class Grid {
-
   List<List<Cell>> _matrix;
   StreamController _onChange;
   List<StreamSubscription> _cellStreamSubs;
@@ -20,8 +18,8 @@ class Grid {
 
   /// Constructs a matrix of cells whose value is all empty
   void _buildEmpty() {
-    for(int r = 0; r < 9; r++) {
-      for(int c = 0; c < 9; c++) {
+    for (int r = 0; r < 9; r++) {
+      for (int c = 0; c < 9; c++) {
         _matrix[r][c] = new Cell(new Position(row: r, column: c));
       }
     }
@@ -33,37 +31,36 @@ class Grid {
     _cellStreamSubs = new List<StreamSubscription>();
     _onChange = new StreamController.broadcast();
 
-    for(int r = 0; r < 9; r++) {
-      for(int c = 0; c < 9; c++) {
-        _cellStreamSubs.add(_matrix[r][c].change.listen(
-                (cell) => _onChange.add(cell)));
+    for (int r = 0; r < 9; r++) {
+      for (int c = 0; c < 9; c++) {
+        _cellStreamSubs
+            .add(_matrix[r][c].change.listen((cell) => _onChange.add(cell)));
       }
     }
   }
 
   /// Detach all subscriptions to cell streams - stop listening to changes
   void stopListening() {
-    for(StreamSubscription sub in _cellStreamSubs) {
+    for (StreamSubscription sub in _cellStreamSubs) {
       sub.cancel();
     }
   }
 
-
   /// Pre-generates the first row of grid with randomized values
   void pregenFirstRow() {
-
     /// Generate digit collection
     List<int> vals = new List<int>();
-    for(int i = 1; i < 10; vals.add(i), i++);
+    for (int i = 1; i < 10; i++) {
+      vals.add(i);
+    }
     vals.shuffle();
 
-    for(int c = 0; c < 9; c++) {
+    for (int c = 0; c < 9; c++) {
       _matrix[0][c].setValue(vals[c]);
       _matrix[0][c].setPrefill(true);
       _matrix[0][c].setValidity(true);
     }
   }
-
 
   /// Returns a list of [Cell] at row # [rowNum]
   List<Cell> getRow(int rowNum) {
@@ -76,7 +73,7 @@ class Grid {
     throwIfInvalid(new Position(row: 0, column: colNum));
     List<Cell> _tmpCol = new List<Cell>();
 
-    for(int c = 0; c < 9; c++) {
+    for (int c = 0; c < 9; c++) {
       _tmpCol[c] = _matrix[c][colNum];
     }
     return _tmpCol;
@@ -87,10 +84,10 @@ class Grid {
     throwIfInvalid(position);
     List<Cell> _tmpSeg = new List<Cell>();
 
-    for(int rInc = 0; rInc < 3; rInc++) {
-      for(int cInc = 0; cInc < 3; cInc++) {
+    for (int rInc = 0; rInc < 3; rInc++) {
+      for (int cInc = 0; cInc < 3; cInc++) {
         _tmpSeg.add(_matrix[(position.segment.x * 3) + rInc]
-                           [(position.segment.y * 3) + cInc]);
+            [(position.segment.y * 3) + cInc]);
       }
     }
     return _tmpSeg;
@@ -101,10 +98,10 @@ class Grid {
   bool _doesCellCollectionHaveViolatedCells(List<Cell> cells) {
     Set<int> _seenValues = new Set<int>();
 
-    for(Cell cell in cells) {
-      if(cell.getValue() == 0) {
+    for (Cell cell in cells) {
+      if (cell.getValue() == 0) {
         continue;
-      } else if(_seenValues.contains(cell.getValue())) {
+      } else if (_seenValues.contains(cell.getValue())) {
         return true;
       }
       _seenValues.add(cell.getValue());
@@ -137,14 +134,12 @@ class Grid {
     return _doesCellCollectionHaveViolatedCells(getSegment(position));
   }
 
-
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
   Cell cellAt(Position pos) => _matrix[pos.grid.x][pos.grid.y];
   Stream get change => _onChange.stream.asBroadcastStream();
   List<List<Cell>> matrix() => _matrix;
 }
-
 
 /// Performs a DEEP clone of a grid
 /// When talking about cloning, it (mostly) boils down to two types;
@@ -155,8 +150,8 @@ class Grid {
 Grid deepClone(Grid source) {
   Grid _target = new Grid();
 
-  for(int r = 0; r < 9; r++) {
-    for(int c = 0; c < 9; c++) {
+  for (int r = 0; r < 9; r++) {
+    for (int c = 0; c < 9; c++) {
       _target.matrix()[r][c].setValidity(source.matrix()[r][c].valid());
       _target.matrix()[r][c].setPristine(source.matrix()[r][c].pristine());
       _target.matrix()[r][c].setMarkup(source.matrix()[r][c].markup());

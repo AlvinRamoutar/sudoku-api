@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import '../models/Cell.dart';
@@ -12,9 +11,9 @@ import 'SudokuException.dart';
 
 /// Throw an [InvalidPositionException] exception if [position] is not valid
 void throwIfInvalid(Position position) {
-  if(position.isValid()) {
+  if (position.isValid()) {
     throw new InvalidPositionException("Position is invalid for a cell at row"
-        " ${position.grid.x} and column ${position.grid.y}");
+        " $position.grid.x and column $position.grid.y");
   }
 }
 
@@ -23,7 +22,6 @@ Position getRandomPosition() {
   Random rand = new Random();
   return new Position(index: rand.nextInt(81));
 }
-
 
 /// Used for debugging [grid], prints to console a somewhat-grid-shaped
 /// matrix of cell value

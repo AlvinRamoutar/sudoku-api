@@ -1,7 +1,5 @@
-
 /// Pattern itself [Map] and metadata describing it
 class Pattern {
-
   String _name;
   Map<int, String> _map;
   int _difficulty;
@@ -19,5 +17,4 @@ class Pattern {
   /// I can only make these comments so interesting and no more :l
   String getName() => _name;
   Map<int, String> getMap() => _map;
-
 }

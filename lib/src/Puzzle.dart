@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'Patterner.dart';
@@ -18,7 +17,6 @@ import 'models/PuzzleOptions.dart';
 /// - Observable grid change
 /// - Stopwatch
 class Puzzle {
-
   Solver _solver;
   Grid _board;
   Patterner _patterner;
@@ -38,19 +36,19 @@ class Puzzle {
 
   /// Generates a new puzzle using parameters set in [_options]
   Future<bool> generate() async {
-
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());
 
-    if(_options.patternName == "Random") {
-      _patterner.buildGridFromRandom(_board,
-          difficultyMap[_options.difficulty]);
+    if (_options.patternName == "Random") {
+      _patterner.buildGridFromRandom(
+          _board, difficultyMap[_options.difficulty]);
     } else {
       _patterner.buildGridFromPattern(_board, _options.patternName);
     }
 
     _board.startListening();
-    _boardChangeStreamSub = _board.change.listen((cell) => _onBoardChange(cell));
+    _boardChangeStreamSub =
+        _board.change.listen((cell) => _onBoardChange(cell));
 
     return true;
   }
@@ -58,7 +56,7 @@ class Puzzle {
   /// Calls supplied [_onChangeHandler], if you have any assigned through
   /// [onBoardChange]
   void _onBoardChange(Cell cell) {
-    if(_onChangeHandler != null) {
+    if (_onChangeHandler != null) {
       _onChangeHandler(cell);
     }
   }
@@ -73,28 +71,33 @@ class Puzzle {
   /// [CellViolation]
   /// For what violations are, please refer to [CellViolation] enum
   List<CellViolation> fillCell(Position position, int value) {
-
     Cell _target = _board.cellAt(position);
     _target.setValue(value);
 
     List<CellViolation> _violations = new List<CellViolation>();
 
-    if(board().isRowViolated(position)) {
+    if (board().isRowViolated(position)) {
       _violations.add(CellViolation.Row);
     }
-    if(board().isColumnViolated(position)) {
+    if (board().isColumnViolated(position)) {
       _violations.add(CellViolation.Column);
     }
-    if(board().isSegmentViolated(position)) {
+    if (board().isSegmentViolated(position)) {
       _violations.add(CellViolation.Segment);
     }
-    if(_target.getValue() != _solver.solvedBoard().cellAt(position).getValue()) {
+    if (_target.getValue() !=
+        _solver.solvedBoard().cellAt(position).getValue()) {
       _violations.add(CellViolation.Solution);
     }
 
     return _violations;
   }
 
+  /// Terminate listeners, and prepare [Puzzle] for closure
+  void dispose() {
+    _boardChangeStreamSub.cancel();
+    _board.stopListening();
+  }
 
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
@@ -104,5 +107,4 @@ class Puzzle {
 
   Grid board() => this._board;
   Grid solvedBoard() => this._solver.solvedBoard();
-
 }

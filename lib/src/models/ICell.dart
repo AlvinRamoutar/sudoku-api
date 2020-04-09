@@ -1,10 +1,8 @@
-
 import 'Position.dart';
 
 /// Interface for creating cell-like objects which belong to a 9x9 grid
 /// Notably used by [Cell]
 abstract class ICell {
-
   /// Position of this cell in a 9x9 grid
   final Position position;
 
@@ -19,5 +17,4 @@ abstract class ICell {
   /// I can only make these comments so interesting and no more :l
   bool pristine() => this.isPristine;
   void setPristine(bool pristine) => this.isPristine = pristine;
-
 }

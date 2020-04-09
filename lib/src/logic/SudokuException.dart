@@ -1,4 +1,3 @@
-
 /*
   Collection of Sudoku-specific exceptions
  */
@@ -9,7 +8,6 @@ class InvalidPositionException implements Exception {
 
   InvalidPositionException(this.cause);
 }
-
 
 /// Throw whenever there's a [Pattern] related issue
 class InvalidPatternException implements Exception {

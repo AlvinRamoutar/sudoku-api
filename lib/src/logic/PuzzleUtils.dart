@@ -1,4 +1,3 @@
-
 /*
    Collection of Utility functions used for stuff puzzle-related
  */
@@ -25,9 +24,4 @@ Map<int, int> difficultyMap = {
 /// - Column: Cell value already exists in that column
 /// - Segment: Cell value already exists in that segment
 /// - Solution: Cell value does not match its solution board counterpart
-enum CellViolation {
-  Row,
-  Column,
-  Segment,
-  Solution
-}
+enum CellViolation { Row, Column, Segment, Solution }

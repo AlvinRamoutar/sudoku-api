@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import '../logic/PuzzleUtils.dart';
@@ -7,7 +6,6 @@ import 'Position.dart';
 
 /// Represents a single cell in a 9x9 grid
 class Cell extends ICell {
-
   /// Value of the cell in range [1-9]
   int _value;
 
@@ -32,7 +30,6 @@ class Cell extends ICell {
     _onChange = new StreamController.broadcast();
   }
 
-
   /// Sets [value] of cell while poking [_onChange]
   void setValue(int value) {
     this._value = value;
@@ -40,7 +37,6 @@ class Cell extends ICell {
 
     _onChange.add(this);
   }
-
 
   /// Clears a cell as if it was never prefilled
   /// Used in grid generation to clear clues in forming patterns
@@ -51,7 +47,6 @@ class Cell extends ICell {
     this._isValid = false;
     this._isValid = false;
   }
-
 
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
@@ -70,12 +65,10 @@ class Cell extends ICell {
 
   Position getPosition() => position;
 
-
   /// Equitable cells, determined by position
   @override
   bool operator ==(dynamic obj) {
-
-    if(obj is Cell && obj.getPosition() == getPosition()) {
+    if (obj is Cell && obj.getPosition() == getPosition()) {
       return true;
     }
     return false;
@@ -83,5 +76,4 @@ class Cell extends ICell {
 
   @override
   int get hashCode => position.hashCode;
-
 }

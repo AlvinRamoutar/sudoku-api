@@ -14,5 +14,3 @@ export 'package:sudoku_api/src/models/PuzzleOptions.dart';
 export 'package:sudoku_api/src/Patterner.dart';
 export 'package:sudoku_api/src/Solver.dart';
 export 'package:sudoku_api/src/Puzzle.dart';
-
-
