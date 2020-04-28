@@ -70,6 +70,12 @@ Give up? Here's your puzzle solution:
 ```
 
 
+### Contributing
+Let's make some sweet Sudoku, together.
+
+1. Fork `sudoku_api`, clone, and checkout the `dev` branch
+2. Write some pretty neat code, then push
+3. [Create a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork)
 
 
 #### Implementations
