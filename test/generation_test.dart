@@ -18,6 +18,28 @@ void main() {
     });
   });
 
+  test("Prefill validity in active board", () {
+    final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
+    final Puzzle puzzle = new Puzzle(puzzleOptions);
+    puzzle.generate().then((_) {
+
+      bool isCellFilled;
+      bool isPrefillValue;
+      for(int r = 0; r < 9; r++) {
+        for(Cell c in puzzle.board().getRow(r)) {
+          isCellFilled = c.getValue() != 0;
+          isPrefillValue = puzzle.board().cellAt(c.getPosition()).prefill();
+
+          // If the value of the cell is 0, then we are expecting prefill to be
+          // false. Likewise, if value of cell is NOT 0, then prefill should be
+          // true.
+          expect(isCellFilled, isPrefillValue);
+        }
+      }
+    });
+
+  });
+
   void testPatternPuzzle(String testTitle, String patternName) {
     final PuzzleOptions puzzleOptions =
       new PuzzleOptions(patternName: patternName);
