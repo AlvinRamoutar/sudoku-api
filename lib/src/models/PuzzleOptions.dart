@@ -16,4 +16,19 @@ class PuzzleOptions {
     this.difficulty = difficulty;
     this.patternName = patternName;
   }
+
+  /// Serialization
+  ///
+  factory PuzzleOptions.fromMap(Map<String, dynamic> json) => PuzzleOptions(
+    name: json["name"] == null ? null : json["name"],
+    difficulty: json["difficulty"] == null ? null : json["difficulty"],
+    patternName: json["pattern_name"] == null ? null : json["pattern_name"],
+  );
+  Map<String, dynamic> toMap() => {
+    "name": name == null ? null : name,
+    "difficulty": difficulty == null ? null : difficulty,
+    "pattern_name": patternName == null ? null : patternName,
+  };
+
+
 }

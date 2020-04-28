@@ -10,6 +10,8 @@ class Solver {
   bool _solutionAttained = false;
   int _ambiguousSolutions = 0;
 
+  Solver({Grid solvedBoard}) : _solvedBoard = solvedBoard;
+
   ///
   ///
   Future<Grid> solveFromGrid(Grid grid) async {
