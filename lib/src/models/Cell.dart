@@ -41,7 +41,7 @@ class Cell{
     bool isValid,
     bool isMarkup,
     bool isPristine,
-    this.position}) : this._value = value, this._isValid = isValid, this._isMarkup = isMarkup, this.isPristine = isPristine {
+    this.position}) : this._isPrefill = isPrefill, this._value = value, this._isValid = isValid, this._isMarkup = isMarkup, this.isPristine = isPristine {
     _onChange = new StreamController.broadcast();
   }
 
@@ -57,8 +57,7 @@ class Cell{
   );
   Map<String, dynamic> toMap() => {
     "value": _value == null ? null : _value,
-    // todo there's an issue with the prefill that breaks my unit test #2. Prefill seems to be null on generation
-//    "is_prefill": _isPrefill == null ? null : _isPrefill,
+    "is_prefill": _isPrefill == null ? null : _isPrefill,
     "is_valid": _isValid == null ? null : _isValid,
     "is_markup": _isMarkup == null ? null : _isMarkup,
     "is_pristine": isPristine == null ? null : isPristine,

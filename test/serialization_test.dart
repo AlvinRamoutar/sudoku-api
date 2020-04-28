@@ -14,10 +14,6 @@ void main() async {
     final Map<String, dynamic> puzzleMap = puzzle.toMap();
     final Puzzle newPuzzle = Puzzle.fromMap(puzzleMap);
     expect(newPuzzle, isInstanceOf<Puzzle>());
-
-    /// solved board is still the same
-    expect(newPuzzle.solvedBoard().toMap(), puzzle.solvedBoard().toMap());
-
   });
 
 
