@@ -170,6 +170,7 @@ Grid deepClone(Grid source) {
       _target.matrix()[r][c].setPristine(source.matrix()[r][c].pristine());
       _target.matrix()[r][c].setMarkup(source.matrix()[r][c].markup());
       _target.matrix()[r][c].setValue(source.matrix()[r][c].getValue());
+      _target.matrix()[r][c].setPrefill(source.matrix()[r][c].prefill());
     }
   }
   return _target;
