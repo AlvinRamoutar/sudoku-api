@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:sudoku_api/src/logic/SudokuException.dart';
+
 import 'Patterner.dart';
 import 'Solver.dart';
 
@@ -78,7 +80,7 @@ class Puzzle {
   Future<bool> generate() async {
 
     if(_board != null)
-      throw('Board already generated');
+      GenerationException('Board already generated');
 
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());

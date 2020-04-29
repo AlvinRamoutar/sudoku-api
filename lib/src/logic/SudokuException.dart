@@ -14,3 +14,9 @@ class InvalidPatternException implements Exception {
   String cause;
   InvalidPatternException(this.cause);
 }
+
+/// Throw whenever [Puzzle] experiences a generation related issue
+class GenerationException implements Exception {
+  String cause;
+  GenerationException(this.cause);
+}
