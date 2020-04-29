@@ -5,13 +5,7 @@ import 'ICell.dart';
 import 'Position.dart';
 
 /// Represents a single cell in a 9x9 grid
-class Cell{
-  /// Position of this cell in a 9x9 grid
-  final Position position;
-
-  /// Whether or not this cell's value has been changed since grid generation
-  bool isPristine;
-
+class Cell extends ICell {
   /// Value of the cell in range [1-9]
   int _value;
 
@@ -29,7 +23,7 @@ class Cell{
 
   /// Constructs new Cell at [position] with optional [_value]
   /// If value is provided, then cell is flagged as prefilled
-  Cell(this.position, [this._value = 0]){
+  Cell(position, [this._value = 0]) : super(position, true){
     _isPrefill = (_value != 0);
     _isValid = _isPrefill;
 
@@ -41,7 +35,7 @@ class Cell{
     bool isValid,
     bool isMarkup,
     bool isPristine,
-    this.position}) : this._isPrefill = isPrefill, this._value = value, this._isValid = isValid, this._isMarkup = isMarkup, this.isPristine = isPristine {
+    Position position}) : this._isPrefill = isPrefill, this._value = value, this._isValid = isValid, this._isMarkup = isMarkup, super(position, isPristine) {
     _onChange = new StreamController.broadcast();
   }
 
