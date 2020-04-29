@@ -46,6 +46,22 @@ class Position {
     }
   }
 
+  Position._({this.grid, this.segment, this.index});
+
+  /// Serialization
+  ///
+  factory Position.fromMap(Map<String, dynamic> json) => Position._(
+    grid: json["grid"] == null ? null : Point(json["grid"]["x"], json["grid"]["y"]),
+    segment: json["segment"] == null ? null : Point(json["segment"]["x"], json["segment"]["y"]),
+    index: json["index"] == null ? null : json["index"],
+  );
+  Map<String, dynamic> toMap() => {
+    "grid": grid == null ? null : {"x": grid.x, "y": grid.y},
+    "segment": segment == null ? null : {"x": segment.x, "y": segment.y},
+    "index": index == null ? null : index,
+  };
+
+
   /// Determine segment of the grid a cell is at using [row] and [col]
   /// Returned as a point, where X and Y are row and column respectfully.
   Point _segmentFromGridPos(int row, int col) =>

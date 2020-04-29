@@ -9,7 +9,7 @@ abstract class ICell {
   /// Whether or not this cell's value has been changed since grid generation
   bool isPristine;
 
-  ICell(this.position);
+  ICell(this.position, this.isPristine);
 
   Position getPosition();
 

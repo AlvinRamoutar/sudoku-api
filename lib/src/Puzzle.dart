@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:sudoku_api/src/logic/SudokuException.dart';
+
 import 'Patterner.dart';
 import 'Solver.dart';
 
@@ -22,6 +24,7 @@ class Puzzle {
   Patterner _patterner;
   PuzzleOptions _options;
   Stopwatch _stopwatch;
+  int _timeElapsedInSeconds = 0; // holds the elapsed time for when getting converted to a map
 
   StreamSubscription _boardChangeStreamSub;
   Function(Cell) _onChangeHandler;
@@ -34,8 +37,51 @@ class Puzzle {
     _patterner = new Patterner();
   }
 
+  /// Private constructor - For when using [Puzzle.fromMap] to get a previously generated puzzle
+  Puzzle._({
+    Grid board,
+    Grid solvedBoard,
+    PuzzleOptions options,
+    int timeElapsedInSeconds = 0,
+  }){
+    _options = options;
+    _board = board;
+    _timeElapsedInSeconds = timeElapsedInSeconds;
+    _patterner = Patterner();
+    _stopwatch = Stopwatch();
+    _solver = Solver(solvedBoard: solvedBoard);
+
+    _board.startListening();
+    _boardChangeStreamSub = _board.change.listen((cell) => _onBoardChange(cell));
+  }
+
+  /// Serialization
+  ///
+  factory Puzzle.fromMap(Map<String, dynamic> map){
+    if (!map.containsKey('board') || !map.containsKey('options') || !map.containsKey('solved_board')){
+      throw('Missing board or options in the map');
+    }
+    return Puzzle._(
+        board: Grid.fromMap(map['board']),
+        solvedBoard: Grid.fromMap(map['solved_board']),
+        options: PuzzleOptions.fromMap(map['options']),
+        timeElapsedInSeconds: map['time_elapsed_in_seconds']
+    );
+  }
+  Map<String, dynamic> toMap() => {
+    "board": board() == null ? null : board().toMap(),
+    "solved_board": _solver.solvedBoard() == null ? null : _solver.solvedBoard().toMap(),
+    "options": options() == null ? null : options().toMap(),
+    "time_elapsed_in_seconds": getTimeElapsed().inSeconds
+  };
+
+
   /// Generates a new puzzle using parameters set in [_options]
   Future<bool> generate() async {
+
+    if(_board != null)
+      GenerationException('Board already generated');
+
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());
 
@@ -103,8 +149,11 @@ class Puzzle {
   /// I can only make these comments so interesting and no more :l
   void startStopwatch() => _stopwatch.start();
   void stopStopwatch() => _stopwatch.stop();
-  Duration getTimeElapsed() => _stopwatch.elapsed;
+  /// Add the time elapsed in case the game is being reloaded from map/storage
+  Duration getTimeElapsed() => Duration(seconds: _timeElapsedInSeconds) + _stopwatch.elapsed;
 
   Grid board() => this._board;
   Grid solvedBoard() => this._solver.solvedBoard();
+
+  PuzzleOptions options() => this._options;
 }

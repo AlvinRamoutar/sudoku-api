@@ -23,12 +23,49 @@ class Cell extends ICell {
 
   /// Constructs new Cell at [position] with optional [_value]
   /// If value is provided, then cell is flagged as prefilled
-  Cell(position, [this._value = 0]) : super(position) {
+  Cell(position, [this._value = 0]) : super(position, true) {
     _isPrefill = (_value != 0);
     _isValid = _isPrefill;
 
     _onChange = new StreamController.broadcast();
   }
+
+  Cell._(
+      {int value,
+      bool isPrefill,
+      bool isValid,
+      bool isMarkup,
+      bool isPristine,
+      Position position})
+      : this._isPrefill = isPrefill,
+        this._value = value,
+        this._isValid = isValid,
+        this._isMarkup = isMarkup,
+        super(position, isPristine) {
+    _onChange = new StreamController.broadcast();
+  }
+
+  /// Serialization
+  ///
+  factory Cell.fromMap(Map<String, dynamic> json) => Cell._(
+        value: json["value"] == null ? null : json["value"],
+        isPrefill: json["is_prefill"] == null ? null : json["is_prefill"],
+        isValid: json["is_valid"] == null ? null : json["is_valid"],
+        isMarkup: json["is_markup"] == null ? null : json["is_markup"],
+        isPristine: json["is_pristine"] == null ? null : json["is_pristine"],
+        position: json["position"] == null
+            ? null
+            : Position.fromMap(json["position"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "value": _value == null ? null : _value,
+        "is_prefill": _isPrefill == null ? null : _isPrefill,
+        "is_valid": _isValid == null ? null : _isValid,
+        "is_markup": _isMarkup == null ? null : _isMarkup,
+        "is_pristine": isPristine == null ? null : isPristine,
+        "position": position == null ? null : position.toMap(),
+      };
 
   /// Sets [value] of cell while poking [_onChange]
   void setValue(int value) {
@@ -50,17 +87,24 @@ class Cell extends ICell {
 
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
+  bool pristine() => this.isPristine;
+
+  void setPristine(bool pristine) => this.isPristine = pristine;
+
   Stream get change => _onChange.stream.asBroadcastStream();
 
   int getValue() => this._value;
 
   void setPrefill(bool isPrefilled) => this._isPrefill = isPrefilled;
+
   bool prefill() => this._isPrefill;
 
   void setValidity(bool isValid) => this._isValid = isValid;
+
   bool valid() => this._isValid;
 
   void setMarkup(bool markup) => this._isMarkup = markup;
+
   bool markup() => this._isMarkup;
 
   Position getPosition() => position;

@@ -16,6 +16,20 @@ class Grid {
     _buildEmpty();
   }
 
+  Grid._(List<List<Cell>> matrix) : this._matrix = matrix;
+
+  /// Serialization
+  ///
+  factory Grid.fromMap(Map<String, dynamic> map){
+    return Grid._(
+        map["matrix"] == null ? null : List<List<Cell>>.from(map["matrix"].map((x) => List<Cell>.from(x.map((x) => Cell.fromMap(x))))),
+    );
+  }
+  Map<String, dynamic> toMap() => {
+    "matrix": _matrix == null ? null : List<dynamic>.from(_matrix.map((x) => List<dynamic>.from(x.map((x) => x.toMap())))),
+  };
+
+
   /// Constructs a matrix of cells whose value is all empty
   void _buildEmpty() {
     for (int r = 0; r < 9; r++) {
