@@ -85,10 +85,10 @@ class Grid {
   /// Returns a list of [Cell] at row # [colNum]
   List<Cell> getColumn(int colNum) {
     throwIfInvalid(new Position(row: 0, column: colNum));
-    List<Cell> _tmpCol = new List<Cell>();
+    List<Cell> _tmpCol = [];
 
     for (int c = 0; c < 9; c++) {
-      _tmpCol[c] = _matrix[c][colNum];
+      _tmpCol.add(_matrix[c][colNum]);
     }
     return _tmpCol;
   }
