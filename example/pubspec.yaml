@@ -1,6 +1,6 @@
 name: example
 description: Simple, single-class example exercising sudoku_api.
-version: 1.0.1
+version: 1.1.1
 homepage: https://github.com/AlvinRamoutar/sudoku-api
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sudoku_api: ^1.0.1
+  sudoku_api: ^1.1.0
 
 dev_dependencies:
   flutter_test:

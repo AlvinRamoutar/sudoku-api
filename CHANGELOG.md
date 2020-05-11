@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1
+* Fixed Board.getColumn() 
+
 ## 1.1.0
 * Added ability to serialize/deserialize puzzles
 
