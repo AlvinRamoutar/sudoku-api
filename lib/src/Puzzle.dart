@@ -149,6 +149,10 @@ class Puzzle {
   /// I can only make these comments so interesting and no more :l
   void startStopwatch() => _stopwatch.start();
   void stopStopwatch() => _stopwatch.stop();
+  
+  ///to check stopclock is paused or not
+  void isStopClockRunning() => _stopwatch.isRunning();
+
   /// Add the time elapsed in case the game is being reloaded from map/storage
   Duration getTimeElapsed() => Duration(seconds: _timeElapsedInSeconds) + _stopwatch.elapsed;
 
