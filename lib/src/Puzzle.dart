@@ -150,8 +150,8 @@ class Puzzle {
   void startStopwatch() => _stopwatch.start();
   void stopStopwatch() => _stopwatch.stop();
   
-  ///to check stopclock is paused or not
-  bool get isStopwatchRunning => _stopwatch.isRunning();
+  ///to check stopwatch is paused or not
+  bool get isStopwatchRunning => _stopwatch.isRunning;
 
   /// Add the time elapsed in case the game is being reloaded from map/storage
   Duration getTimeElapsed() => Duration(seconds: _timeElapsedInSeconds) + _stopwatch.elapsed;
