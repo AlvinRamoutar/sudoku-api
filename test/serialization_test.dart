@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:sudoku_api/sudoku_api.dart';
 
 void main() async {
@@ -13,8 +13,9 @@ void main() async {
 
     final Map<String, dynamic> puzzleMap = puzzle.toMap();
     final Puzzle newPuzzle = Puzzle.fromMap(puzzleMap);
-    expect(newPuzzle, isInstanceOf<Puzzle>());
+    expect(newPuzzle, isA<Puzzle>());
   });
+
 
 
   String serializationTestTitle02 = 'Test solved board is still the same';
