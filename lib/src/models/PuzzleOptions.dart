@@ -6,14 +6,14 @@ import '../Puzzle.dart';
 class PuzzleOptions {
   final String _id = new Uuid().v1();
   String name;
-  int difficulty;
+  int clues;
   String patternName;
 
   /// Constructs new PuzzleOptions - use me when constructing a new [Puzzle]
   PuzzleOptions(
-      {String name, int difficulty = 0, String patternName = "Random"}) {
+      {String name, int clues = 25, String patternName = "random"}) {
     this.name = name;
-    this.difficulty = difficulty;
+    this.clues = clues;
     this.patternName = patternName;
   }
 
@@ -21,12 +21,12 @@ class PuzzleOptions {
   ///
   factory PuzzleOptions.fromMap(Map<String, dynamic> json) => PuzzleOptions(
     name: json["name"] == null ? null : json["name"],
-    difficulty: json["difficulty"] == null ? null : json["difficulty"],
+    clues: json["clues"] == null ? null : json["clues"],
     patternName: json["pattern_name"] == null ? null : json["pattern_name"],
   );
   Map<String, dynamic> toMap() => {
     "name": name == null ? null : name,
-    "difficulty": difficulty == null ? null : difficulty,
+    "clues": clues == null ? null : clues,
     "pattern_name": patternName == null ? null : patternName,
   };
 

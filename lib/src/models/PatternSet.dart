@@ -77,10 +77,10 @@ class PatternSet<Pattern> extends DelegatingList<MY.Pattern> {
   void loadDefaults() {
     _l.add(new MY.Pattern("random", null));
 
-    _l.add(new MY.Pattern("spring", _spring, difficulty: 29));
-    _l.add(new MY.Pattern("summer", _summer, difficulty: 27));
-    _l.add(new MY.Pattern("fall", _fall, difficulty: 24));
-    _l.add(new MY.Pattern("winter", _winter, difficulty: 31));
+    _l.add(new MY.Pattern("spring", _spring, clues: 29));
+    _l.add(new MY.Pattern("summer", _summer, clues: 27));
+    _l.add(new MY.Pattern("fall", _fall, clues: 24));
+    _l.add(new MY.Pattern("winter", _winter, clues: 31));
   }
 
   /// Adds new [Pattern] to set, and ensures validity

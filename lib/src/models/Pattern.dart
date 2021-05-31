@@ -2,14 +2,14 @@
 class Pattern {
   String _name;
   Map<int, String> _map;
-  int _difficulty;
+  int _clues;
   String _author;
 
   /// Constructs a new Pattern object
-  /// [difficulty] is arbitrary, and 'can' defined by # of clues given
+  /// [clues] is defined by # of clues given
   Pattern(this._name, this._map,
-      {int difficulty = 0, String author = "Anonymous"}) {
-    this._difficulty = difficulty;
+      {int clues = 0, String author = "Anonymous"}) {
+    this._clues = clues;
     this._author = author;
   }
 

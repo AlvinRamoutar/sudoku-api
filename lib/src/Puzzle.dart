@@ -87,7 +87,7 @@ class Puzzle {
 
     if (_options.patternName == "Random") {
       _patterner.buildGridFromRandom(
-          _board, difficultyMap[_options.difficulty]);
+          _board, _options.clues);
     } else {
       _patterner.buildGridFromPattern(_board, _options.patternName);
     }
