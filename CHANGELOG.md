@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3
+* Added better markup tracking with HashSet
+
 ## 1.2.2
 * Fix some dart formatting
 * Use dart SDK >=2.1.0 <3.0.0
