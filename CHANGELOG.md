@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+* Fix some dart formatting
+* Use dart SDK >=2.1.0 <3.0.0
+
 ## 1.2.1
 * Bugfix: case-insensitive check for pattern name
 

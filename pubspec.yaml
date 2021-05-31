@@ -1,10 +1,10 @@
 name: sudoku_api
 description: sudoku_api simplifies the generation, interaction, and management of Sudoku Puzzles.
-version: 1.2.1
+version: 1.2.2
 homepage: https://github.com/AlvinRamoutar/sudoku-api
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.1.2 <3.0.0"
 
 dependencies:
   uuid: ^3.0.4
