@@ -85,7 +85,7 @@ class Puzzle {
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());
 
-    if (_options.patternName == "Random") {
+    if (_options.patternName.toLowerCase() == "random") {
       _patterner.buildGridFromRandom(
           _board, _options.clues);
     } else {

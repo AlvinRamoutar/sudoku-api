@@ -1,6 +1,6 @@
 name: example
 description: Simple, single-class example exercising sudoku_api.
-version: 1.2.0
+version: 1.2.1
 homepage: https://github.com/AlvinRamoutar/sudoku-api
 
 environment:
