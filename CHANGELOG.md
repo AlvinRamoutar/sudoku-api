@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+* Updated packages
+* Removed concept of difficulty, now more straight-forward with clues
+
 ## 1.1.1
 * Fixed Board.getColumn() 
 
