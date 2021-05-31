@@ -50,7 +50,7 @@ class Patterner {
     }
 
     Position pos;
-    List<int> cellIndices = new List<int>();
+    List<int> cellIndices = [];
 
     for (int i = 0; i < 81; i++) {
       cellIndices.add(i);

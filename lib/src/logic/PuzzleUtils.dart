@@ -11,7 +11,6 @@ int avgClues = 25;
 /// Maximum clues necessary for a valid sudoku puzzle
 int maxClues = 80;
 
-
 /// Possible types of cell violations that can be committed
 /// Violations:
 /// - Row: Cell value already exists in that row
