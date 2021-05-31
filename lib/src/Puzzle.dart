@@ -85,7 +85,7 @@ class Puzzle {
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());
 
-    if (_options.patternName == "Random") {
+    if (_options.patternName.toLowerCase() == "random") {
       _patterner.buildGridFromRandom(
           _board, _options.clues);
     } else {
@@ -149,6 +149,10 @@ class Puzzle {
   /// I can only make these comments so interesting and no more :l
   void startStopwatch() => _stopwatch.start();
   void stopStopwatch() => _stopwatch.stop();
+  
+  ///to check stopwatch is paused or not
+  bool get isStopwatchRunning => _stopwatch.isRunning;
+
   /// Add the time elapsed in case the game is being reloaded from map/storage
   Duration getTimeElapsed() => Duration(seconds: _timeElapsedInSeconds) + _stopwatch.elapsed;
 

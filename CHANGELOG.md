@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+* Bugfix: case-insensitive check for pattern name
+
 ## 1.2.0
 * Updated packages
 * Removed concept of difficulty, now more straight-forward with clues
