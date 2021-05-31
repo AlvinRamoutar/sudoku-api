@@ -178,7 +178,7 @@ Grid deepClone(Grid source) {
     for (int c = 0; c < 9; c++) {
       _target.matrix()[r][c].setValidity(source.matrix()[r][c].valid());
       _target.matrix()[r][c].setPristine(source.matrix()[r][c].pristine());
-      _target.matrix()[r][c].setMarkup(source.matrix()[r][c].markup());
+      _target.matrix()[r][c].addMarkupSet(source.matrix()[r][c].getMarkup());
       _target.matrix()[r][c].setValue(source.matrix()[r][c].getValue());
       _target.matrix()[r][c].setPrefill(source.matrix()[r][c].prefill());
     }

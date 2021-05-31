@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import '../logic/PuzzleUtils.dart';
 import 'ICell.dart';
@@ -16,8 +17,8 @@ class Cell extends ICell {
   /// Meaning, it must possess NO [CellViolation]
   bool _isValid;
 
-  /// Is this cell in markup mode?
-  bool _isMarkup = false;
+  /// Markup tracking
+  HashSet<int> _markup = new HashSet<int>();
 
   StreamController _onChange;
 
@@ -34,13 +35,13 @@ class Cell extends ICell {
       {int value,
       bool isPrefill,
       bool isValid,
-      bool isMarkup,
+      HashSet<int> markup,
       bool isPristine,
       Position position})
       : this._isPrefill = isPrefill,
         this._value = value,
         this._isValid = isValid,
-        this._isMarkup = isMarkup,
+        this._markup = markup,
         super(position, isPristine) {
     _onChange = new StreamController.broadcast();
   }
@@ -51,7 +52,7 @@ class Cell extends ICell {
         value: json["value"] == null ? null : json["value"],
         isPrefill: json["is_prefill"] == null ? null : json["is_prefill"],
         isValid: json["is_valid"] == null ? null : json["is_valid"],
-        isMarkup: json["is_markup"] == null ? null : json["is_markup"],
+        markup: json["markup"] == null ? null : json["markup"],
         isPristine: json["is_pristine"] == null ? null : json["is_pristine"],
         position: json["position"] == null
             ? null
@@ -62,7 +63,7 @@ class Cell extends ICell {
         "value": _value == null ? null : _value,
         "is_prefill": _isPrefill == null ? null : _isPrefill,
         "is_valid": _isValid == null ? null : _isValid,
-        "is_markup": _isMarkup == null ? null : _isMarkup,
+        "markup": _markup == null ? null : _markup,
         "is_pristine": isPristine == null ? null : isPristine,
         "position": position == null ? null : position.toMap(),
       };
@@ -103,9 +104,19 @@ class Cell extends ICell {
 
   bool valid() => this._isValid;
 
-  void setMarkup(bool markup) => this._isMarkup = markup;
+  void addMarkup(int value) => this._markup.add(value);
 
-  bool markup() => this._isMarkup;
+  void addMarkupSet(HashSet<int> values) => this._markup.addAll(values);
+
+  void removeMarkup(int value) => this._markup.remove(value);
+
+  void removeLastMarkup() => this._markup.remove(this._markup.last);
+
+  void clearMarkup() => this._markup.clear();
+
+  HashSet<int> getMarkup() => this._markup;
+
+  bool markup() => this._markup.isNotEmpty;
 
   Position getPosition() => position;
 
