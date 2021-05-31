@@ -3,23 +3,22 @@ import 'package:sudoku_api/sudoku_api.dart';
 
 void main() {
 
-  String testTitle01 = 'Test Puzzle Generation. Difficulty: Lv3. Pattern: Random.';
-  test(testTitle01, () {
-    final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
+  void testPuzzleGen({int clues = 0, String pattern = "random"}) {
+    final PuzzleOptions puzzleOptions =
+      new PuzzleOptions(clues: clues, patternName: pattern);
     final Puzzle puzzle = new Puzzle(puzzleOptions);
     puzzle.generate().then((_) {
       print("=================");
-      print(testTitle01);
-      print("-----------------");
       printGrid(puzzle.solvedBoard());
       print("-----------------");
       printGrid(puzzle.board());
       print("=================");
     });
-  });
+  }
 
-  test("Prefill validity in active board", () {
-    final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
+
+    test("Prefill validity in active board", () {
+    final PuzzleOptions puzzleOptions = new PuzzleOptions(clues: 25);
     final Puzzle puzzle = new Puzzle(puzzleOptions);
     puzzle.generate().then((_) {
 
@@ -37,60 +36,57 @@ void main() {
         }
       }
     });
-
-  });
-
-  void testPatternPuzzle(String testTitle, String patternName) {
-    final PuzzleOptions puzzleOptions =
-      new PuzzleOptions(patternName: patternName);
-    final Puzzle puzzle = new Puzzle(puzzleOptions);
-    puzzle.generate().then((_) {
-      print("=================");
-      print(testTitle);
-      print("-----------------");
-      printGrid(puzzle.solvedBoard());
-      print("-----------------");
-      printGrid(puzzle.board());
-      print("=================");
-    });
-  }
-
-  String testTitle02 = 'Test Puzzle Generation. Pattern: Spring.';
-  test(testTitle02, () {
-    testPatternPuzzle(testTitle02, "spring");
   });
 
 
-  String testTitle03 = 'Test Puzzle Generation. Pattern: Summer.';
-  test(testTitle03, () {
-    testPatternPuzzle(testTitle03, "summer");
+  String testRandom32Clues = 'Test Puzzle Generation. Clues: 32 (easy). Pattern: Random.';
+  test(testRandom32Clues, () {
+    testPuzzleGen(clues: 32, pattern: "random");
   });
 
-  String testTitle04 = 'Test Puzzle Generation. Pattern: Fall.';
-  test(testTitle04, () {
-    testPatternPuzzle(testTitle04, "fall");
+  String testRandom25Clues = 'Test Puzzle Generation. Clues: 25 (normal). Pattern: Random.';
+  test(testRandom25Clues, () {
+    testPuzzleGen(clues: 25, pattern: "random");
   });
 
-  String testTitle05 = 'Test Puzzle Generation. Pattern: Winter.';
-  test(testTitle05, () {
-    testPatternPuzzle(testTitle05, "winter");
+  String testRandom17Clues = 'Test Puzzle Generation. Clues: 17 (hard). Pattern: Random.';
+  test(testRandom17Clues, () {
+    testPuzzleGen(clues: 17, pattern: "random");
   });
 
-  String testTitle06 = 'Test Grid-level listener for cell change';
-  test(testTitle06, () {
+  String testSpring = 'Test Puzzle Generation. Pattern: Spring.';
+  test(testSpring, () {
+    testPuzzleGen(pattern: "spring");
+  });
 
-    final PuzzleOptions puzzleOptions = new PuzzleOptions(difficulty: 3);
+  String testSummer = 'Test Puzzle Generation. Pattern: Summer.';
+  test(testSummer, () {
+    testPuzzleGen(pattern: "summer");
+  });
+
+  String testFall = 'Test Puzzle Generation. Pattern: Fall.';
+  test(testFall, () {
+    testPuzzleGen(pattern: "fall");
+  });
+
+    String testWinter = 'Test Puzzle Generation. Pattern: Winter.';
+  test(testWinter, () {
+    testPuzzleGen(pattern: "winter");
+  });
+
+  String testGridListener = 'Test Grid-level listener for cell change';
+  test(testGridListener, () {
+
+    final PuzzleOptions puzzleOptions = new PuzzleOptions(clues: 25);
     final Puzzle puzzle = new Puzzle(puzzleOptions);
     Position randPos;
 
     puzzle.generate().then((_) {
       print("=================");
-      print(testTitle01);
-      print("-----------------");
       printGrid(puzzle.solvedBoard());
       print("-----------------");
       printGrid(puzzle.board());
-      print("-----------------");
+      print("=================");
 
       while(true) {
         randPos = getRandomPosition();

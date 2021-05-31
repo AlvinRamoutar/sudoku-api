@@ -17,7 +17,6 @@ void main() async {
   });
 
 
-
   String serializationTestTitle02 = 'Test solved board is still the same';
   test(serializationTestTitle02, () {
     final Map<String, dynamic> puzzleMap = puzzle.toMap();

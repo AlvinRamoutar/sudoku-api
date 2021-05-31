@@ -2,21 +2,15 @@
    Collection of Utility functions used for stuff puzzle-related
  */
 
-/// Map representing level <=> difficulty linguistic term
-Map<int, String> difficultyLinguisticMap = {
-  0: "custom",
-  1: "easy",
-  2: "normal",
-  3: "hard"
-};
+/// Minimum clues necessary for a valid sudoku puzzle
+int minClues = 17;
 
-/// Map representing level <=> cells given
-Map<int, int> difficultyMap = {
-  0: 0,
-  1: 32,
-  2: 26,
-  3: 20,
-};
+/// Average clues of a sudoku puzzle
+int avgClues = 25;
+
+/// Maximum clues necessary for a valid sudoku puzzle
+int maxClues = 80;
+
 
 /// Possible types of cell violations that can be committed
 /// Violations:
