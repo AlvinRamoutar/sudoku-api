@@ -12,7 +12,7 @@ class Grid {
 
   /// Constructs a grid with matrix of cells whose value is all empty
   Grid() {
-    _matrix = List.generate(9, (_) => new List(9), growable: false);
+    _matrix = List.generate(9, (_) => List<Cell>.filled(9 ,new Cell(-1) , growable: false), growable: false);
     _buildEmpty();
   }
 
@@ -42,7 +42,7 @@ class Grid {
   /// Attach listeners for each cell - the grid is now listening for changes to
   /// any cell, and will broadcast them through [_onChange]
   void startListening() {
-    _cellStreamSubs = new List<StreamSubscription>();
+    _cellStreamSubs = new List<StreamSubscription>.empty();
     _onChange = new StreamController.broadcast();
 
     for (int r = 0; r < 9; r++) {
@@ -63,7 +63,7 @@ class Grid {
   /// Pre-generates the first row of grid with randomized values
   void pregenFirstRow() {
     /// Generate digit collection
-    List<int> vals = new List<int>();
+    List<int> vals = new List<int>.empty();
     for (int i = 1; i < 10; i++) {
       vals.add(i);
     }
@@ -96,7 +96,7 @@ class Grid {
   /// Returns a list of [Cell] at segment defined by [position.segment]
   List<Cell> getSegment(Position position) {
     throwIfInvalid(position);
-    List<Cell> _tmpSeg = new List<Cell>();
+    List<Cell> _tmpSeg = new List<Cell>.empty();
 
     for (int rInc = 0; rInc < 3; rInc++) {
       for (int cInc = 0; cInc < 3; cInc++) {

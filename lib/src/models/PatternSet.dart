@@ -118,7 +118,7 @@ class PatternSet<Pattern> extends DelegatingList<MY.Pattern> {
   Tuple2<bool, List<String>> _checkValidPatternMap(Map<int, String> map) {
     String _patrow = "";
     String _bigrow = "";
-    List<String> _reasons = new List<String>();
+    List<String> _reasons = new List<String>.empty();
 
     for (int row = 0; row < 9; row++) {
       _patrow = map[row].replaceAll(' ', '');

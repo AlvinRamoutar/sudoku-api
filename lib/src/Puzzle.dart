@@ -120,7 +120,7 @@ class Puzzle {
     Cell _target = _board.cellAt(position);
     _target.setValue(value);
 
-    List<CellViolation> _violations = new List<CellViolation>();
+    List<CellViolation> _violations = new List<CellViolation>.empty();
 
     if (board().isRowViolated(position)) {
       _violations.add(CellViolation.Row);
