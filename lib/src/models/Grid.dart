@@ -12,7 +12,12 @@ class Grid {
 
   /// Constructs a grid with matrix of cells whose value is all empty
   Grid() {
-    _matrix = List.generate(9, (_) => List<Cell>.filled(9 ,new Cell(-1) , growable: false), growable: false);
+    _matrix = List.generate(
+        9,
+        (_) => List<Cell>.filled(
+            9, new Cell(new Position(row: 0, column: 0, index: 0)),
+            growable: false),
+        growable: false);
     _buildEmpty();
   }
 
@@ -20,15 +25,20 @@ class Grid {
 
   /// Serialization
   ///
-  factory Grid.fromMap(Map<String, dynamic> map){
+  factory Grid.fromMap(Map<String, dynamic> map) {
     return Grid._(
-        map["matrix"] == null ? null : List<List<Cell>>.from(map["matrix"].map((x) => List<Cell>.from(x.map((x) => Cell.fromMap(x))))),
+      map["matrix"] == null
+          ? null
+          : List<List<Cell>>.from(map["matrix"]
+              .map((x) => List<Cell>.from(x.map((x) => Cell.fromMap(x))))),
     );
   }
   Map<String, dynamic> toMap() => {
-    "matrix": _matrix == null ? null : List<dynamic>.from(_matrix.map((x) => List<dynamic>.from(x.map((x) => x.toMap())))),
-  };
-
+        "matrix": _matrix == null
+            ? null
+            : List<dynamic>.from(_matrix
+                .map((x) => List<dynamic>.from(x.map((x) => x.toMap())))),
+      };
 
   /// Constructs a matrix of cells whose value is all empty
   void _buildEmpty() {
@@ -42,7 +52,7 @@ class Grid {
   /// Attach listeners for each cell - the grid is now listening for changes to
   /// any cell, and will broadcast them through [_onChange]
   void startListening() {
-    _cellStreamSubs = new List<StreamSubscription>.empty();
+    _cellStreamSubs = [];
     _onChange = new StreamController.broadcast();
 
     for (int r = 0; r < 9; r++) {
@@ -63,7 +73,7 @@ class Grid {
   /// Pre-generates the first row of grid with randomized values
   void pregenFirstRow() {
     /// Generate digit collection
-    List<int> vals = new List<int>.empty();
+    List<int> vals = [];
     for (int i = 1; i < 10; i++) {
       vals.add(i);
     }
@@ -96,7 +106,7 @@ class Grid {
   /// Returns a list of [Cell] at segment defined by [position.segment]
   List<Cell> getSegment(Position position) {
     throwIfInvalid(position);
-    List<Cell> _tmpSeg = new List<Cell>.empty();
+    List<Cell> _tmpSeg = [];
 
     for (int rInc = 0; rInc < 3; rInc++) {
       for (int cInc = 0; cInc < 3; cInc++) {
