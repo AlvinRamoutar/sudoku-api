@@ -8,19 +8,19 @@ import 'Position.dart';
 /// Represents a single cell in a 9x9 grid
 class Cell extends ICell {
   /// Value of the cell in range [1-9]
-  int _value;
+  int? _value;
 
   /// Does this cell have a value, initially?
-  bool _isPrefill;
+  bool? _isPrefill;
 
   /// Does this cell match its solution counterpart?
   /// Meaning, it must possess NO [CellViolation]
-  bool _isValid;
+  bool? _isValid;
 
   /// Markup tracking
-  HashSet<int> _markup = new HashSet<int>();
+  HashSet<int>? _markup = new HashSet<int>();
 
-  StreamController _onChange;
+  late StreamController _onChange;
 
   /// Constructs new Cell at [position] with optional [_value]
   /// If value is provided, then cell is flagged as prefilled
@@ -32,12 +32,12 @@ class Cell extends ICell {
   }
 
   Cell._(
-      {int value,
-      bool isPrefill,
-      bool isValid,
-      HashSet<int> markup,
-      bool isPristine,
-      Position position})
+      {int? value,
+      bool? isPrefill,
+      bool? isValid,
+      HashSet<int>? markup,
+      bool? isPristine,
+      Position? position})
       : this._isPrefill = isPrefill,
         this._value = value,
         this._isValid = isValid,
@@ -65,11 +65,11 @@ class Cell extends ICell {
         "is_valid": _isValid == null ? null : _isValid,
         "markup": _markup == null ? null : _markup,
         "is_pristine": isPristine == null ? null : isPristine,
-        "position": position == null ? null : position.toMap(),
+        "position": position == null ? null : position!.toMap(),
       };
 
   /// Sets [value] of cell while poking [_onChange]
-  void setValue(int value) {
+  void setValue(int? value) {
     this._value = value;
     this.isPristine = false;
 
@@ -88,37 +88,37 @@ class Cell extends ICell {
 
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
-  bool pristine() => this.isPristine;
+  bool? pristine() => this.isPristine;
 
-  void setPristine(bool pristine) => this.isPristine = pristine;
+  void setPristine(bool? pristine) => this.isPristine = pristine;
 
   Stream get change => _onChange.stream.asBroadcastStream();
 
-  int getValue() => this._value;
+  int? getValue() => this._value;
 
-  void setPrefill(bool isPrefilled) => this._isPrefill = isPrefilled;
+  void setPrefill(bool? isPrefilled) => this._isPrefill = isPrefilled;
 
-  bool prefill() => this._isPrefill;
+  bool? prefill() => this._isPrefill;
 
-  void setValidity(bool isValid) => this._isValid = isValid;
+  void setValidity(bool? isValid) => this._isValid = isValid;
 
-  bool valid() => this._isValid;
+  bool? valid() => this._isValid;
 
-  void addMarkup(int value) => this._markup.add(value);
+  void addMarkup(int value) => this._markup!.add(value);
 
-  void addMarkupSet(HashSet<int> values) => this._markup.addAll(values);
+  void addMarkupSet(HashSet<int> values) => this._markup!.addAll(values);
 
-  void removeMarkup(int value) => this._markup.remove(value);
+  void removeMarkup(int value) => this._markup!.remove(value);
 
-  void removeLastMarkup() => this._markup.remove(this._markup.last);
+  void removeLastMarkup() => this._markup!.remove(this._markup!.last);
 
-  void clearMarkup() => this._markup.clear();
+  void clearMarkup() => this._markup!.clear();
 
-  HashSet<int> getMarkup() => this._markup;
+  HashSet<int>? getMarkup() => this._markup;
 
-  bool markup() => this._markup.isNotEmpty;
+  bool markup() => this._markup!.isNotEmpty;
 
-  Position getPosition() => position;
+  Position? getPosition() => position;
 
   /// Equitable cells, determined by position
   @override

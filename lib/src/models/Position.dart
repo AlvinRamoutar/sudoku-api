@@ -21,16 +21,16 @@ import '../logic/SudokuException.dart';
 ///      8 | 0 0 0 | 0 0 0 | 0 0 0 |
 ///        -------------------------
 class Position {
-  Point grid;
-  Point segment;
-  int index;
+  Point? grid;
+  Point? segment;
+  int? index;
 
   /// Construct a cell position, using either a [row]/[column] pair, or [index]
   Position({int row = -1, int column = -1, int index = -1}) {
     /// If index is supplied
     if (index != -1) {
       grid = new Point((index / 9).floor(), index % 9);
-      segment = _segmentFromGridPos(grid.x, grid.y);
+      segment = _segmentFromGridPos(grid!.x as int, grid!.y as int);
       this.index = index;
 
       /// If row/column is supplied
@@ -56,8 +56,8 @@ class Position {
     index: json["index"] == null ? null : json["index"],
   );
   Map<String, dynamic> toMap() => {
-    "grid": grid == null ? null : {"x": grid.x, "y": grid.y},
-    "segment": segment == null ? null : {"x": segment.x, "y": segment.y},
+    "grid": grid == null ? null : {"x": grid!.x, "y": grid!.y},
+    "segment": segment == null ? null : {"x": segment!.x, "y": segment!.y},
     "index": index == null ? null : index,
   };
 
@@ -69,7 +69,7 @@ class Position {
 
   /// Determine if position is valid via simple range check of [index]
   bool isValid() {
-    if (index < 0 || index > 80) {
+    if (index! < 0 || index! > 80) {
       return true;
     }
     return false;

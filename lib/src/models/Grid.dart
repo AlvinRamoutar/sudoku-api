@@ -6,9 +6,9 @@ import 'Cell.dart';
 /// Container for holding 9x9 cell matrix
 /// For an example of what a 9x9 grid looks like, see [Position]
 class Grid {
-  List<List<Cell>> _matrix;
-  StreamController _onChange;
-  List<StreamSubscription> _cellStreamSubs;
+  List<List<Cell>>? _matrix;
+  late StreamController _onChange;
+  late List<StreamSubscription> _cellStreamSubs;
 
   /// Constructs a grid with matrix of cells whose value is all empty
   Grid() {
@@ -21,7 +21,7 @@ class Grid {
     _buildEmpty();
   }
 
-  Grid._(List<List<Cell>> matrix) : this._matrix = matrix;
+  Grid._(List<List<Cell>>? matrix) : this._matrix = matrix;
 
   /// Serialization
   ///
@@ -36,7 +36,7 @@ class Grid {
   Map<String, dynamic> toMap() => {
         "matrix": _matrix == null
             ? null
-            : List<dynamic>.from(_matrix
+            : List<dynamic>.from(_matrix!
                 .map((x) => List<dynamic>.from(x.map((x) => x.toMap())))),
       };
 
@@ -44,7 +44,7 @@ class Grid {
   void _buildEmpty() {
     for (int r = 0; r < 9; r++) {
       for (int c = 0; c < 9; c++) {
-        _matrix[r][c] = new Cell(new Position(row: r, column: c));
+        _matrix![r][c] = new Cell(new Position(row: r, column: c));
       }
     }
   }
@@ -58,7 +58,7 @@ class Grid {
     for (int r = 0; r < 9; r++) {
       for (int c = 0; c < 9; c++) {
         _cellStreamSubs
-            .add(_matrix[r][c].change.listen((cell) => _onChange.add(cell)));
+            .add(_matrix![r][c].change.listen((cell) => _onChange.add(cell)));
       }
     }
   }
@@ -80,16 +80,16 @@ class Grid {
     vals.shuffle();
 
     for (int c = 0; c < 9; c++) {
-      _matrix[0][c].setValue(vals[c]);
-      _matrix[0][c].setPrefill(true);
-      _matrix[0][c].setValidity(true);
+      _matrix![0][c].setValue(vals[c]);
+      _matrix![0][c].setPrefill(true);
+      _matrix![0][c].setValidity(true);
     }
   }
 
   /// Returns a list of [Cell] at row # [rowNum]
   List<Cell> getRow(int rowNum) {
     throwIfInvalid(new Position(row: rowNum, column: 0));
-    return _matrix[rowNum];
+    return _matrix![rowNum];
   }
 
   /// Returns a list of [Cell] at row # [colNum]
@@ -98,7 +98,7 @@ class Grid {
     List<Cell> _tmpCol = [];
 
     for (int c = 0; c < 9; c++) {
-      _tmpCol.add(_matrix[c][colNum]);
+      _tmpCol.add(_matrix![c][colNum]);
     }
     return _tmpCol;
   }
@@ -110,8 +110,8 @@ class Grid {
 
     for (int rInc = 0; rInc < 3; rInc++) {
       for (int cInc = 0; cInc < 3; cInc++) {
-        _tmpSeg.add(_matrix[(position.segment.x * 3) + rInc]
-            [(position.segment.y * 3) + cInc]);
+        _tmpSeg.add(_matrix![(position.segment!.x * 3) + rInc as int]
+            [(position.segment!.y * 3) + cInc as int]);
       }
     }
     return _tmpSeg;
@@ -120,7 +120,7 @@ class Grid {
   /// Determines if any of [cells] have the same value, returns true if so
   /// Excludes empty cells (cells whose value is 0)
   bool _doesCellCollectionHaveViolatedCells(List<Cell> cells) {
-    Set<int> _seenValues = new Set<int>();
+    Set<int?> _seenValues = new Set<int?>();
 
     for (Cell cell in cells) {
       if (cell.getValue() == 0) {
@@ -139,7 +139,7 @@ class Grid {
   /// then this row is violated
   /// No violations are counted for empty cells (cells whose value is 0)
   bool isRowViolated(Position position) {
-    return _doesCellCollectionHaveViolatedCells(getRow(position.grid.x));
+    return _doesCellCollectionHaveViolatedCells(getRow(position.grid!.x as int));
   }
 
   /// Determines if a column is violated by using a [Set] of [Cell] values
@@ -147,7 +147,7 @@ class Grid {
   /// then this column is violated
   /// No violations are counted for empty cells (cells whose value is 0)
   bool isColumnViolated(Position position) {
-    return _doesCellCollectionHaveViolatedCells(getColumn(position.grid.y));
+    return _doesCellCollectionHaveViolatedCells(getColumn(position.grid!.y as int));
   }
 
   /// Determines if a segment is violated by using a [Set] of [Cell] values
@@ -160,9 +160,9 @@ class Grid {
 
   /// Getters and setters
   /// I can only make these comments so interesting and no more :l
-  Cell cellAt(Position pos) => _matrix[pos.grid.x][pos.grid.y];
+  Cell cellAt(Position pos) => _matrix![pos.grid!.x as int][pos.grid!.y as int];
   Stream get change => _onChange.stream.asBroadcastStream();
-  List<List<Cell>> matrix() => _matrix;
+  List<List<Cell>>? matrix() => _matrix;
 }
 
 /// Performs a DEEP clone of a grid
@@ -171,16 +171,16 @@ class Grid {
 ///          for as many of that objects fields as possible.
 /// Deep:    Constructs a new object in new memory space, along with new objects
 ///          for all fields within that object.
-Grid deepClone(Grid source) {
+Grid deepClone(Grid? source) {
   Grid _target = new Grid();
 
   for (int r = 0; r < 9; r++) {
     for (int c = 0; c < 9; c++) {
-      _target.matrix()[r][c].setValidity(source.matrix()[r][c].valid());
-      _target.matrix()[r][c].setPristine(source.matrix()[r][c].pristine());
-      _target.matrix()[r][c].addMarkupSet(source.matrix()[r][c].getMarkup());
-      _target.matrix()[r][c].setValue(source.matrix()[r][c].getValue());
-      _target.matrix()[r][c].setPrefill(source.matrix()[r][c].prefill());
+      _target.matrix()![r][c].setValidity(source!.matrix()![r][c].valid());
+      _target.matrix()![r][c].setPristine(source.matrix()![r][c].pristine());
+      _target.matrix()![r][c].addMarkupSet(source.matrix()![r][c].getMarkup()!);
+      _target.matrix()![r][c].setValue(source.matrix()![r][c].getValue());
+      _target.matrix()![r][c].setPrefill(source.matrix()![r][c].prefill());
     }
   }
   return _target;
