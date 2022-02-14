@@ -6,21 +6,21 @@ import 'models/Cell.dart';
 /// Implementation based on my previous project; Java Sudoku
 /// https://github.com/AlvinRamoutar/Sudoku
 class Solver {
-  Grid _solvedBoard;
+  Grid? _solvedBoard;
   bool _solutionAttained = false;
   int _ambiguousSolutions = 0;
 
-  Solver({Grid solvedBoard}) : _solvedBoard = solvedBoard;
+  Solver({Grid? solvedBoard}) : _solvedBoard = solvedBoard;
 
   ///
   ///
-  Future<Grid> solveFromGrid(Grid grid) async {
+  Future<Grid?> solveFromGrid(Grid grid) async {
     _solvedBoard = new Grid();
     _solve(grid, 0);
     return _solvedBoard;
   }
 
-  Future<Grid> solve() async {
+  Future<Grid?> solve() async {
     _solvedBoard = new Grid();
     Grid _tmpGrid = new Grid();
     _tmpGrid.pregenFirstRow();
@@ -38,9 +38,9 @@ class Solver {
     if (indice == 81) {
       for (int o = 0; o < 9; o++) {
         for (int i = 0; i < 9; i++) {
-          _solvedBoard.matrix()[o][i].setValue(board.matrix()[o][i].getValue());
-          _solvedBoard.matrix()[o][i].setValidity(true);
-          _solvedBoard.matrix()[o][i].setPrefill(true);
+          _solvedBoard!.matrix()![o][i].setValue(board.matrix()![o][i].getValue());
+          _solvedBoard!.matrix()![o][i].setValidity(true);
+          _solvedBoard!.matrix()![o][i].setPrefill(true);
         }
       }
       _solutionAttained = true;
@@ -51,15 +51,15 @@ class Solver {
 
       if (_solutionAttained) {
         //Proceed to pre-filled cells
-      } else if (board.matrix()[row][col].getValue() != 0) {
+      } else if (board.matrix()![row][col].getValue() != 0) {
         _solve(board, indice + 1);
       } else {
         //Currently at a location that requires a value, try all possibilities
         for (int i = 1; i <= 9; i++) {
           if (consistent(board, new Position(row: row, column: col), i)) {
-            board.matrix()[row][col].setValue(i);
+            board.matrix()![row][col].setValue(i);
             _solve(board, indice + 1);
-            board.matrix()[row][col].setValue(0);
+            board.matrix()![row][col].setValue(0);
           }
         }
       }
@@ -91,14 +91,14 @@ class Solver {
       int col = indice % 9;
 
       if (_ambiguousSolutions > 2) {
-      } else if (board.matrix()[row][col].getValue() != 0) {
+      } else if (board.matrix()![row][col].getValue() != 0) {
         _checkAmbiguity(board, indice + 1);
       } else {
         for (int i = 1; i <= 9; i++) {
           if (consistent(board, new Position(row: row, column: col), i)) {
-            board.matrix()[row][col].setValue(i);
+            board.matrix()![row][col].setValue(i);
             _checkAmbiguity(board, indice + 1);
-            board.matrix()[row][col].setValue(0);
+            board.matrix()![row][col].setValue(0);
           }
         }
       }
@@ -111,8 +111,8 @@ class Solver {
   bool consistent(Grid board, Position pos, int c) {
     // Checks columns and rows
     for (int i = 0; i < 9; i++) {
-      if (board.matrix()[pos.grid.x][i].getValue() == c ||
-          board.matrix()[i][pos.grid.y].getValue() == c) return false;
+      if (board.matrix()![pos.grid!.x as int][i].getValue() == c ||
+          board.matrix()![i][pos.grid!.y as int].getValue() == c) return false;
     }
 
     // Checks segment of grid
@@ -125,5 +125,5 @@ class Solver {
     return true;
   }
 
-  Grid solvedBoard() => _solvedBoard;
+  Grid? solvedBoard() => _solvedBoard;
 }

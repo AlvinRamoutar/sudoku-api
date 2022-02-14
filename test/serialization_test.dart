@@ -20,7 +20,7 @@ void main() async {
   test(serializationTestTitle02, () {
     final Map<String, dynamic> puzzleMap = puzzle.toMap();
     final Puzzle newPuzzle = Puzzle.fromMap(puzzleMap);
-    expect(newPuzzle.solvedBoard().toMap(), puzzle.solvedBoard().toMap());
+    expect(newPuzzle.solvedBoard()!.toMap(), puzzle.solvedBoard()!.toMap());
   });
 
   String serializationTestTitle03 =
@@ -38,11 +38,11 @@ void main() async {
   test(serializationTestTitle04, () async {
     int posIndex = -1;
     for (int i = 0; i < 81; i++) {
-      if (!puzzle.board().cellAt(new Position(index: i)).prefill()) {
+      if (!puzzle.board()!.cellAt(new Position(index: i)).prefill()!) {
         posIndex = i;
-        puzzle.board().cellAt(new Position(index: i)).addMarkup(5);
-        puzzle.board().cellAt(new Position(index: i)).addMarkup(7);
-        puzzle.board().cellAt(new Position(index: i)).addMarkup(9);
+        puzzle.board()!.cellAt(new Position(index: i)).addMarkup(5);
+        puzzle.board()!.cellAt(new Position(index: i)).addMarkup(7);
+        puzzle.board()!.cellAt(new Position(index: i)).addMarkup(9);
       }
     }
 
@@ -50,14 +50,14 @@ void main() async {
     final Puzzle newPuzzle = Puzzle.fromMap(puzzleMap);
     expect(
         newPuzzle
-            .board()
+            .board()!
             .cellAt(new Position(index: posIndex))
-            .getMarkup()
+            .getMarkup()!
             .length,
         puzzle
-            .board()
+            .board()!
             .cellAt(new Position(index: posIndex))
-            .getMarkup()
+            .getMarkup()!
             .length);
   });
 }

@@ -19,16 +19,16 @@ import 'models/PuzzleOptions.dart';
 /// - Observable grid change
 /// - Stopwatch
 class Puzzle {
-  Solver _solver;
-  Grid _board;
-  Patterner _patterner;
-  PuzzleOptions _options;
-  Stopwatch _stopwatch;
-  int _timeElapsedInSeconds =
+  late Solver _solver;
+  Grid? _board;
+  late Patterner _patterner;
+  PuzzleOptions? _options;
+  late Stopwatch _stopwatch;
+  int? _timeElapsedInSeconds =
       0; // holds the elapsed time for when getting converted to a map
 
-  StreamSubscription _boardChangeStreamSub;
-  Function(Cell) _onChangeHandler;
+  late StreamSubscription _boardChangeStreamSub;
+  Function(Cell)? _onChangeHandler;
 
   /// Constructs a new Sudoku puzzle - don't forget to run [generate]
   Puzzle(PuzzleOptions options) {
@@ -40,10 +40,10 @@ class Puzzle {
 
   /// Private constructor - For when using [Puzzle.fromMap] to get a previously generated puzzle
   Puzzle._({
-    Grid board,
-    Grid solvedBoard,
-    PuzzleOptions options,
-    int timeElapsedInSeconds = 0,
+    Grid? board,
+    Grid? solvedBoard,
+    PuzzleOptions? options,
+    int? timeElapsedInSeconds = 0,
   }) {
     _options = options;
     _board = board;
@@ -52,9 +52,9 @@ class Puzzle {
     _stopwatch = Stopwatch();
     _solver = Solver(solvedBoard: solvedBoard);
 
-    _board.startListening();
+    _board!.startListening();
     _boardChangeStreamSub =
-        _board.change.listen((cell) => _onBoardChange(cell));
+        _board!.change.listen((cell) => _onBoardChange(cell));
   }
 
   /// Serialization
@@ -72,11 +72,11 @@ class Puzzle {
         timeElapsedInSeconds: map['time_elapsed_in_seconds']);
   }
   Map<String, dynamic> toMap() => {
-        "board": board() == null ? null : board().toMap(),
+        "board": board() == null ? null : board()!.toMap(),
         "solved_board": _solver.solvedBoard() == null
             ? null
-            : _solver.solvedBoard().toMap(),
-        "options": options() == null ? null : options().toMap(),
+            : _solver.solvedBoard()!.toMap(),
+        "options": options() == null ? null : options()!.toMap(),
         "time_elapsed_in_seconds": getTimeElapsed().inSeconds
       };
 
@@ -87,15 +87,15 @@ class Puzzle {
     await _solver.solve();
     _board = deepClone(_solver.solvedBoard());
 
-    if (_options.patternName.toLowerCase() == "random") {
-      _patterner.buildGridFromRandom(_board, _options.clues);
+    if (_options!.patternName!.toLowerCase() == "random") {
+      _patterner.buildGridFromRandom(_board, _options!.clues!);
     } else {
-      _patterner.buildGridFromPattern(_board, _options.patternName);
+      _patterner.buildGridFromPattern(_board, _options!.patternName);
     }
 
-    _board.startListening();
+    _board!.startListening();
     _boardChangeStreamSub =
-        _board.change.listen((cell) => _onBoardChange(cell));
+        _board!.change.listen((cell) => _onBoardChange(cell));
 
     return true;
   }
@@ -104,7 +104,7 @@ class Puzzle {
   /// [onBoardChange]
   void _onBoardChange(Cell cell) {
     if (_onChangeHandler != null) {
-      _onChangeHandler(cell);
+      _onChangeHandler!(cell);
     }
   }
 
@@ -118,22 +118,22 @@ class Puzzle {
   /// [CellViolation]
   /// For what violations are, please refer to [CellViolation] enum
   List<CellViolation> fillCell(Position position, int value) {
-    Cell _target = _board.cellAt(position);
+    Cell _target = _board!.cellAt(position);
     _target.setValue(value);
 
     List<CellViolation> _violations = new List<CellViolation>.empty();
 
-    if (board().isRowViolated(position)) {
+    if (board()!.isRowViolated(position)) {
       _violations.add(CellViolation.Row);
     }
-    if (board().isColumnViolated(position)) {
+    if (board()!.isColumnViolated(position)) {
       _violations.add(CellViolation.Column);
     }
-    if (board().isSegmentViolated(position)) {
+    if (board()!.isSegmentViolated(position)) {
       _violations.add(CellViolation.Segment);
     }
     if (_target.getValue() !=
-        _solver.solvedBoard().cellAt(position).getValue()) {
+        _solver.solvedBoard()!.cellAt(position).getValue()) {
       _violations.add(CellViolation.Solution);
     }
 
@@ -143,7 +143,7 @@ class Puzzle {
   /// Terminate listeners, and prepare [Puzzle] for closure
   void dispose() {
     _boardChangeStreamSub.cancel();
-    _board.stopListening();
+    _board!.stopListening();
   }
 
   /// Getters and setters
@@ -156,10 +156,10 @@ class Puzzle {
 
   /// Add the time elapsed in case the game is being reloaded from map/storage
   Duration getTimeElapsed() =>
-      Duration(seconds: _timeElapsedInSeconds) + _stopwatch.elapsed;
+      Duration(seconds: _timeElapsedInSeconds!) + _stopwatch.elapsed;
 
-  Grid board() => this._board;
-  Grid solvedBoard() => this._solver.solvedBoard();
+  Grid? board() => this._board;
+  Grid? solvedBoard() => this._solver.solvedBoard();
 
-  PuzzleOptions options() => this._options;
+  PuzzleOptions? options() => this._options;
 }

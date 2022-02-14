@@ -25,10 +25,10 @@ Position getRandomPosition() {
 
 /// Used for debugging [grid], prints to console a somewhat-grid-shaped
 /// matrix of cell value
-void printGrid(Grid grid) {
+void printGrid(Grid? grid) {
   for (int r = 0; r < 9; r++) {
     String row = "";
-    for (Cell c in grid.getRow(r)) {
+    for (Cell c in grid!.getRow(r)) {
       row += ((c.getValue() == 0) ? " " : c.getValue()).toString() + " ";
     }
     print(row);

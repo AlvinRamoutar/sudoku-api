@@ -6,7 +6,7 @@ import 'models/Position.dart';
 
 /// Controller for managing patterns, and building puzzles out of them
 class Patterner {
-  PatternSet patternSet;
+  late PatternSet patternSet;
 
   /// Create new patterner and inits [patternSet] with default seasonal pattern
   Patterner() {
@@ -16,24 +16,18 @@ class Patterner {
 
   /// Modifies [grid] according to pattern identified by [patternName]
   /// For built-in patterns, check out [PatternSet]
-  Grid buildGridFromPattern(Grid grid, String patternName) {
+  Grid? buildGridFromPattern(Grid? grid, String? patternName) {
     /// Retrieve from PatternSet
-    Pattern pattern = patternSet.firstWhere((p) => p.getName() == patternName,
-        orElse: () => null);
-
-    if (pattern == null) {
-      throw new InvalidPatternException("Pattern map with name $patternName"
-          " not found");
-    }
+    Pattern? pattern = patternSet.firstWhere((p) => p.getName() == patternName);
 
     /// Modifies grid according to pattern, replacing clues with empty cells
     String _patrow = "";
     for (int row = 0; row < 9; row++) {
-      _patrow = pattern.getMap()[row].replaceAll(' ', '');
+      _patrow = pattern.getMap()![row]!.replaceAll(' ', '');
 
       for (int col = 0; col < 9; col++) {
         if (_patrow.codeUnitAt(col) != HOLDER_CODE) {
-          grid.matrix()[row][col].clear();
+          grid!.matrix()![row][col].clear();
         }
       }
     }
@@ -42,7 +36,7 @@ class Patterner {
   }
 
   /// Modifies [grid] according to random pattern and [cellsRemaining] (clues)
-  Grid buildGridFromRandom(Grid grid, int cellsRemaining) {
+  Grid? buildGridFromRandom(Grid? grid, int cellsRemaining) {
     /// Catch for those trying to generate illegal grids
     if (cellsRemaining > 80 || cellsRemaining < 1) {
       throw new InvalidPatternException("Cannot generate random grid with "
@@ -60,7 +54,7 @@ class Patterner {
     /// Randomly pull index val. between [0, 80] and clear that cell
     while (cellIndices.length != cellsRemaining) {
       pos = new Position(index: cellIndices.removeLast());
-      grid.matrix()[pos.grid.x][pos.grid.y].clear();
+      grid!.matrix()![pos.grid!.x as int][pos.grid!.y as int].clear();
     }
 
     return grid;

@@ -23,11 +23,11 @@ void main() {
     puzzle.generate().then((_) {
 
       bool isCellFilled;
-      bool isPrefillValue;
+      bool? isPrefillValue;
       for(int r = 0; r < 9; r++) {
-        for(Cell c in puzzle.board().getRow(r)) {
+        for(Cell c in puzzle.board()!.getRow(r)) {
           isCellFilled = c.getValue() != 0;
-          isPrefillValue = puzzle.board().cellAt(c.getPosition()).prefill();
+          isPrefillValue = puzzle.board()!.cellAt(c.getPosition()!).prefill();
 
           // If the value of the cell is 0, then we are expecting prefill to be
           // false. Likewise, if value of cell is NOT 0, then prefill should be
@@ -90,8 +90,8 @@ void main() {
 
       while(true) {
         randPos = getRandomPosition();
-        if(!puzzle.board().matrix()[randPos.grid.x][randPos.grid.y].prefill()) {
-          puzzle.board().matrix()[randPos.grid.x][randPos.grid.y].setValue(1);
+        if(!puzzle.board()!.matrix()![randPos.grid!.x as int][randPos.grid!.y as int].prefill()!) {
+          puzzle.board()!.matrix()![randPos.grid!.x as int][randPos.grid!.y as int].setValue(1);
           break;
         }
       }

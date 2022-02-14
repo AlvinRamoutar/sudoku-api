@@ -87,7 +87,7 @@ class PatternSet<Pattern> extends DelegatingList<MY.Pattern> {
   /// Validity checks include pattern name, and pattern integrity
   @override
   void add(MY.Pattern element) {
-    if (element.getName() == null || element.getName().isEmpty) {
+    if (element.getName().isEmpty) {
       throw InvalidPatternException("Pattern is missing name");
     } else if (!_checkValidPatternMap(element.getMap()).item1) {
       throw InvalidPatternException("Pattern format for ${element.getName()} "
@@ -115,13 +115,13 @@ class PatternSet<Pattern> extends DelegatingList<MY.Pattern> {
   ///   7: "0 0 0 1 1 1 0 0 0",
   ///   8: "0 0 0 0 1 0 0 0 0"
   ///
-  Tuple2<bool, List<String>> _checkValidPatternMap(Map<int, String> map) {
+  Tuple2<bool, List<String>> _checkValidPatternMap(Map<int, String>? map) {
     String _patrow = "";
     String _bigrow = "";
     List<String> _reasons = new List<String>.empty();
 
     for (int row = 0; row < 9; row++) {
-      _patrow = map[row].replaceAll(' ', '');
+      _patrow = map![row]!.replaceAll(' ', '');
 
       if (_patrow.length != 9) {
         _reasons.add("Pattern Map row #$row does not " +
