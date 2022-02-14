@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0
+* Added support for null safety (thanks Pherne!)
+
 ## 1.2.3
 * Added better markup tracking with HashSet
 
