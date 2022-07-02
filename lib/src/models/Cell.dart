@@ -52,7 +52,9 @@ class Cell extends ICell {
         value: json["value"] == null ? null : json["value"],
         isPrefill: json["is_prefill"] == null ? null : json["is_prefill"],
         isValid: json["is_valid"] == null ? null : json["is_valid"],
-        markup: json["markup"] == null ? null : json["markup"],
+        markup: json["markup"] == null
+            ? null
+            : HashSet.from(json["markup"].cast<int>()),
         isPristine: json["is_pristine"] == null ? null : json["is_pristine"],
         position: json["position"] == null
             ? null
@@ -63,7 +65,7 @@ class Cell extends ICell {
         "value": _value == null ? null : _value,
         "is_prefill": _isPrefill == null ? null : _isPrefill,
         "is_valid": _isValid == null ? null : _isValid,
-        "markup": _markup == null ? null : _markup,
+        "markup": _markup == null ? null : _markup!.toList(),
         "is_pristine": isPristine == null ? null : isPristine,
         "position": position == null ? null : position!.toMap(),
       };
