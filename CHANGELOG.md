@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0
+* Fixed pattern set collection (thanks rmasarovic!)
+
 ## 2.0.0
 * Added support for null safety (thanks Pherne!)
 
